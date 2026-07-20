@@ -14,6 +14,7 @@ import { Footer } from "@/components/site/Footer";
 import { CartProvider } from "@/components/cart/CartContext";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
+import { AccessGate } from "@/components/site/AccessGate";
 
 function NotFoundComponent() {
   return (
@@ -108,17 +109,19 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <CartProvider>
-        <div className="flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1">
-            <Outlet />
-          </main>
-          <Footer />
-        </div>
-        <CartDrawer />
-        <FloatingWhatsApp />
-      </CartProvider>
+      <AccessGate>
+        <CartProvider>
+          <div className="flex min-h-screen flex-col">
+            <Header />
+            <main className="flex-1">
+              <Outlet />
+            </main>
+            <Footer />
+          </div>
+          <CartDrawer />
+          <FloatingWhatsApp />
+        </CartProvider>
+      </AccessGate>
     </QueryClientProvider>
   );
 }
